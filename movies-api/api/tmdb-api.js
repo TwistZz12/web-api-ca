@@ -49,3 +49,21 @@ export const getMovies = async (page = 1) => {
         throw error;
     }
 };
+
+export const getMovie = async (id) => {
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_KEY}`
+        );
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.status_message || "Something went wrong");
+        }
+
+        return await response.json(); 
+    } catch (error) {
+        console.error(`Error fetching movie with ID ${id}:`, error.message);
+        throw error;
+    }
+};

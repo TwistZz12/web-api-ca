@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
-import { getMovie, getCredits, getVideos } from "../api/tmdb-api"; 
+import { getMovie,getCredits, getVideos} from "../api/moviesApi";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import CastList from "../components/castList";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getActorDetails, getActorMovies } from "../api/tmdb-api";
+import { getActorDetails, getActorMovies } from "../api//moviesApi";
 import Spinner from "../components/spinner";
 import Pagination from "@mui/material/Pagination"; // 引入 MUI Pagination
 import Box from "@mui/material/Box"; // 引入 MUI Box，用于布局

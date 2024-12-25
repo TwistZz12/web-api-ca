@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { getMovieTredning } from "../api/tmdb-api";
+import { getMovieTrending } from "../api/moviesApi";
 import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
 import AddToWatchListIcon from "../components/cardIcons/addToWatchList"; // 引入图标组件
@@ -16,7 +16,7 @@ const TrendingTodayPage = () => {
 
   const { data, error, isLoading, isError } = useQuery(
     ["trendingToday", currentPage],
-    () => getMovieTredning(currentPage),
+    () => getMovieTrending(currentPage),
     { keepPreviousData: true }
   );
 

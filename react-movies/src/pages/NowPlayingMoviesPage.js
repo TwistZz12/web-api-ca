@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { getNowPlayingMovies } from "../api/tmdb-api";
+import { getNowPlayingMovies } from "../api/moviesApi";
 import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
 import AddToWatchListIcon from "../components/cardIcons/addToWatchList"; // 引入图标组件
