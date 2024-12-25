@@ -3,7 +3,8 @@ import asyncHandler from 'express-async-handler';
 import express from 'express';
 import {
     getUpcomingMovies,
-    getMovieGenres 
+    getMovieGenres,
+    getMovies
 } from '../tmdb-api';
 
 const router = express.Router();
@@ -52,5 +53,13 @@ router.get('/tmdb/genres', asyncHandler(async (req, res) => {
     const genres = await getMovieGenres(); 
     res.status(200).json(genres);
 }));
+
+// Get movies from TMDB with pagination
+router.get('/tmdb/discover', asyncHandler(async (req, res) => {
+    const { page = 1 } = req.query;
+    const movies = await getMovies(page); 
+    res.status(200).json(movies); 
+}));
+
 
 export default router;

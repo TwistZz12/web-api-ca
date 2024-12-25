@@ -52,6 +52,7 @@ export const getMovie = (args) => {
       throw error
    });
   };
+
   // export const getGenres = () => {
   //   return fetch(
   //     "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
@@ -69,6 +70,7 @@ export const getMovie = (args) => {
   //     throw error
   //  });
   // };
+  
   export const getMovieImages = ({ queryKey }) => {
     const [, idPart] = queryKey;
     const { id } = idPart;
@@ -105,15 +107,15 @@ export const getMovie = (args) => {
    });
   };
 
-  export const getUpcomingMovies = async (page = 1) => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch upcoming movies");
-    }
-    return response.json();
-  };
+  // export const getUpcomingMovies = async (page = 1) => {
+  //   const response = await fetch(
+  //     `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
+  //   );
+  //   if (!response.ok) {
+  //     throw new Error("Failed to fetch upcoming movies");
+  //   }
+  //   return response.json();
+  // };
   
   export const getMovieTredning = (page = 1) => {
     return fetch(
