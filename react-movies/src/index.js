@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import LoginPage from "./pages/loginPage";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
@@ -26,13 +27,24 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const isAuthenticated = () => {
+    const token = window.localStorage.getItem("token");
+    return !!token;
+  };
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+ <BrowserRouter>
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
-            <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+            {/* 添加受保护的路由 */}
+            <Route
+              path="/movies/favorites"
+              element={
+                isAuthenticated() ? <FavoriteMoviesPage /> : <Navigate to="/login" />
+              }
+            />
+            {/* 其他页面 */}
             <Route path="/movies/trendingToday" element={<TrendingTodayPage />} />
             <Route path="/reviews/:id" element={<MovieReviewPage />} />
             <Route path="/movies/:id" element={<MoviePage />} />
@@ -42,6 +54,8 @@ const App = () => {
             <Route path="/reviews/form" element={<AddMovieReviewPage />} />
             <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
             <Route path="/movies/NowPlayingMovies" element={<NowPlayingPage />} />
+            {/* 登录页面 */}
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </MoviesContextProvider>
       </BrowserRouter>
