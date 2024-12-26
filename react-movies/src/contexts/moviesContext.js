@@ -1,22 +1,28 @@
 import React, { useState } from "react";
+import { addFavorite, removeFavorite } from "../api/moviesApi";
+
 
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState([]);
   
-  const addToFavorites = (movie) => {
-    let newFavorites = [];
-    if (!favorites.includes(movie.id)) {
-      newFavorites = [...favorites, movie.id];
-    } else {
-      newFavorites = [...favorites];
+  const addToFavorites = async (movie) => {
+    try {
+      await addFavorite({ userId: "12345", movieId: movie.id, movieTitle: movie.title }); 
+      setFavorites((prev) => [...prev, movie.id]); 
+    } catch (error) {
+      console.error("Failed to add favorite:", error.message);
     }
-    setFavorites(newFavorites);
   };
 
-  const removeFromFavorites = (movie) => {
-    setFavorites(favorites.filter((mId) => mId !== movie.id));
+  const removeFromFavorites = async (movie) => {
+    try {
+      await removeFavorite("12345", movie.id); 
+      setFavorites((prev) => prev.filter((mId) => mId !== movie.id)); 
+    } catch (error) {
+      console.error("Failed to remove favorite:", error.message);
+    }
   };
 
   const [myReviews, setMyReviews] = useState({});
@@ -41,14 +47,14 @@ const MoviesContextProvider = (props) => {
 
   return (
     <MoviesContext.Provider
-      value={{
-        favorites,
-        addToFavorites,
-        removeFromFavorites,
-        addReview,
-        watchList,
-        addToWatchList,
-        removeFromWatchList,
+    value={{
+      favorites,
+      addToFavorites, 
+      removeFromFavorites, 
+      addReview,
+      watchList,
+      addToWatchList,
+      removeFromWatchList,
       }}
     >
       {props.children}

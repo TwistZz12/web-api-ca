@@ -15,6 +15,8 @@ import {
     getActorDetails,
     getActorMovies
 } from '../tmdb-api';
+import Favorite from '../favorite/favoriteModel';
+
 
 const router = express.Router();
 
@@ -132,5 +134,45 @@ router.get('/tmdb/actor/:id/movies', asyncHandler(async (req, res) => {
     const actorMovies = await getActorMovies(id);
     res.status(200).json(actorMovies);
 }));
+
+//
+router.post('/favorites', asyncHandler(async (req, res) => {
+    const { userId, movieId, movieTitle } = req.body;
+
+    if (!userId || !movieId || !movieTitle) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    const favorite = new Favorite({ userId, movieId, movieTitle });
+    await favorite.save();
+
+    res.status(201).json({ message: 'Favorite added successfully', favorite });
+}));
+
+// 
+router.get('/favorites/:userId', asyncHandler(async (req, res) => {
+    const { userId } = req.params;
+
+    const favorites = await Favorite.find({ userId });
+
+    res.status(200).json({ favorites });
+}));
+
+// 删除收藏的电影
+router.delete('/favorites/:userId/:movieId', async (req, res) => {
+    const { userId, movieId } = req.params;
+
+    try {
+        const result = await Favorite.deleteOne({ userId, movieId });
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'Favorite not found' });
+        }
+
+        res.status(200).json({ message: 'Favorite removed successfully' });
+    } catch (error) {
+        console.error("Error removing favorite:", error.message);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 export default router;
