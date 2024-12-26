@@ -135,7 +135,7 @@ router.get('/tmdb/actor/:id/movies', asyncHandler(async (req, res) => {
     res.status(200).json(actorMovies);
 }));
 
-//
+//Post favorite movies
 router.post('/favorites', asyncHandler(async (req, res) => {
     const { userId, movieId, movieTitle } = req.body;
 
@@ -149,7 +149,7 @@ router.post('/favorites', asyncHandler(async (req, res) => {
     res.status(201).json({ message: 'Favorite added successfully', favorite });
 }));
 
-// 
+// get favorites movies 
 router.get('/favorites/:userId', asyncHandler(async (req, res) => {
     const { userId } = req.params;
 
@@ -158,7 +158,7 @@ router.get('/favorites/:userId', asyncHandler(async (req, res) => {
     res.status(200).json({ favorites });
 }));
 
-// 删除收藏的电影
+// Delete favorites movies by ID
 router.delete('/favorites/:userId/:movieId', async (req, res) => {
     const { userId, movieId } = req.params;
 
